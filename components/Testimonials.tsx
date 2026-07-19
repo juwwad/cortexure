@@ -2,7 +2,7 @@ export default function Testimonials() {
   const testimonials = [
     {
       quote:
-        '"Cortexture delivered a product that our entire engineering team is proud of. The quality and attention to detail was beyond anything we\'d seen from an agency."',
+        '"Axiom Inc. delivered a product that our entire engineering team is proud of. The quality and attention to detail was beyond anything we\'d seen from an agency."',
       name: 'Sarah Chen',
       role: 'CTO, Vesta Capital',
       initials: 'SC',

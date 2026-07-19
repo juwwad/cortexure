@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Cortexture — AI Engineering x Premium Web Development',
+  title: 'Axiom Inc — AI Engineering x Premium Web Development',
   description:
-    'Cortexture builds AI-powered digital products and premium web experiences at the intersection of engineering rigor and design elegance.',
+    'Axiom Inc builds AI-powered digital products and premium web experiences at the intersection of engineering rigor and design elegance.',
 };
 
 export default function RootLayout({

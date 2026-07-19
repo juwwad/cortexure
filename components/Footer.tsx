@@ -94,7 +94,7 @@ export default function Footer() {
               <div className="term-dot" style={{ background: '#FEBC2E' }}></div>
               <div className="term-dot" style={{ background: '#28C840' }}></div>
             </div>
-            <span className="term-title">cortexture — project intake v1.0</span>
+            <span className="term-title">Axiom Inc. — project intake v1.0</span>
           </div>
           <div className="term-row">
             <span className="term-prompt-char">›</span>
@@ -174,12 +174,12 @@ export default function Footer() {
         {/* Footer columns */}
         <div className="footer-grid">
           <div className="footer-logo-block">
-            <div className="footer-logo-text">Cortexture</div>
+            <div className="footer-logo-text">Axiom Inc.</div>
             <p>
               AI Engineering x Premium Web Development. Building products that matter, with
               craft that endures.
             </p>
-            <p className="footer-copy">© 2025 Cortexture Studio. All rights reserved.</p>
+            <p className="footer-copy">© 2025 Axiom Inc. Studio. All rights reserved.</p>
           </div>
           <div className="footer-col">
             <h5>Studio</h5>

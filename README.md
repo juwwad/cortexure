@@ -1,4 +1,4 @@
-# Cortexture
+# Axiom Inc.
 
 A premium portfolio website built with **Next.js 14**, **TypeScript**, and **React 18**. Features an interactive mesh canvas, custom cursor, smooth animations, and a responsive design system.
 
@@ -25,7 +25,7 @@ A premium portfolio website built with **Next.js 14**, **TypeScript**, and **Rea
 ## Project Structure
 
 ```
-cortexture/
+Axiom Inc./
 ├── app/
 │   ├── layout.tsx          # Root layout with metadata
 │   ├── page.tsx            # Home page
@@ -150,7 +150,7 @@ const { error } = await supabase
 
 ## License
 
-© 2025 Cortexture Studio. All rights reserved.
+© 2025 Axiom Inc. Studio. All rights reserved.
 
 ## Support
 

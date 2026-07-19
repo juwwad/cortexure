@@ -13,7 +13,7 @@ export default function Navigation() {
   return (
     <nav id="nav">
       <Link href="#" className="nav-logo">
-        Cortexture
+        Axiom Inc.
       </Link>
       <div className="nav-links">
         <a href="#services">Services</a>

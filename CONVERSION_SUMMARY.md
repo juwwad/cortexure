@@ -1,12 +1,12 @@
-# Cortexture HTML to Next.js Conversion Summary
+# Axiom Inc. HTML to Next.js Conversion Summary
 
 ## Overview
-Your Cortexture portfolio website has been successfully converted from vanilla HTML to a modern **Next.js 14 + TypeScript** application.
+Your Axiom Inc. portfolio website has been successfully converted from vanilla HTML to a modern **Next.js 14 + TypeScript** application.
 
 ## What Was Converted
 
 ### HTML File
-- **Single `cortexture.html`** (1400+ lines)
+- **Single `Axiom Inc..html`** (1400+ lines)
 - Inline CSS styles
 - Vanilla JavaScript
 
