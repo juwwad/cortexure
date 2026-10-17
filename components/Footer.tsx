@@ -82,7 +82,7 @@ export default function Footer() {
       <div className="footer-inner">
         <p className="footer-label reveal">Start a project</p>
         <h2 className="footer-title reveal delay1">
-          Let's build something
+          Let&apos;s build something
           <br />
           <span className="dim">worth shipping.</span>
         </h2>
@@ -165,7 +165,7 @@ export default function Footer() {
             {submitted && (
               <div className="term-success" style={{ display: 'flex' }}>
                 <span className="term-success-icon">✓</span>
-                Received. We'll be in touch within 24 hours.
+                Received. We&apos;ll be in touch within 24 hours.
               </div>
             )}
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import Cursor from '@/components/Cursor';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
