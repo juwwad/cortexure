@@ -75,7 +75,7 @@ export default function Projects() {
     <section id="projects">
       <p className="section-label reveal">Selected work</p>
       <h2 className="section-title reveal delay1">
-        Products we've
+        Products we&apos;ve
         <br />
         shipped.
       </h2>
