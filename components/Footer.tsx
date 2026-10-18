@@ -110,7 +110,7 @@ export default function Footer() {
           </div>
           <div className={`term-expand ${expandForm ? 'open' : ''}`} id="term-expand">
             <div className="term-field">
-              <label>Your name</label>
+              <label htmlFor="t-name">Your name</label>
               <input
                 id="t-name"
                 placeholder="e.g. Sarah Chen"
@@ -119,7 +119,7 @@ export default function Footer() {
               />
             </div>
             <div className="term-field">
-              <label>Email address</label>
+              <label htmlFor="t-email">Email address</label>
               <input
                 id="t-email"
                 type="email"
@@ -129,7 +129,7 @@ export default function Footer() {
               />
             </div>
             <div className="term-field">
-              <label>Service needed</label>
+              <label htmlFor="t-service">Service needed</label>
               <select
                 id="t-service"
                 value={formData.service}
@@ -143,7 +143,7 @@ export default function Footer() {
               </select>
             </div>
             <div className="term-field">
-              <label>Budget range</label>
+              <label htmlFor="t-budget">Budget range</label>
               <input
                 id="t-budget"
                 placeholder="e.g. $20–50k, open to discuss"
