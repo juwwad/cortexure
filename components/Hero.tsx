@@ -31,9 +31,15 @@ export default function Hero() {
             mY = canvas.offsetHeight / 2;
 
         function resizeMesh() {
-            if (!canvas) return;
-            W = canvas.width = canvas.offsetWidth;
-            H = canvas.height = canvas.offsetHeight;
+            if (!canvas || !ctx) return;
+            // Scale the backing store by devicePixelRatio so the mesh is crisp on
+            // high-DPI displays; drawing stays in CSS pixels via the transform.
+            const dpr = window.devicePixelRatio || 1;
+            W = canvas.offsetWidth;
+            H = canvas.offsetHeight;
+            canvas.width = Math.round(W * dpr);
+            canvas.height = Math.round(H * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             initPts();
         }
 
