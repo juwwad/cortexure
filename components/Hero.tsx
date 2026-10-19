@@ -28,6 +28,7 @@ export default function Hero() {
             H = 0;
         let pts: Point[] = [];
         let rafId = 0;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let mX = canvas.offsetWidth / 2,
             mY = canvas.offsetHeight / 2;
 
@@ -112,12 +113,14 @@ export default function Hero() {
                 ctx.fill();
             });
 
-            rafId = requestAnimationFrame(drawMesh);
+            if (!reduceMotion) rafId = requestAnimationFrame(drawMesh);
         }
 
         const hero = document.getElementById('hero');
-        hero?.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('resize', resizeMesh);
+        if (!reduceMotion) {
+            hero?.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('resize', resizeMesh);
+        }
 
         resizeMesh();
         drawMesh();
