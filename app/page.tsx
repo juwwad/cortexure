@@ -25,7 +25,7 @@ export default function Home() {
     document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
 
     // Hero reveals immediately
-    setTimeout(() => {
+    const heroRevealTimer = setTimeout(() => {
       document.querySelectorAll('#hero .reveal').forEach((el, i) => {
         setTimeout(() => el.classList.add('in'), i * 130);
       });
@@ -46,6 +46,8 @@ export default function Home() {
     window.addEventListener('scroll', handleNavScroll);
 
     return () => {
+      revealObs.disconnect();
+      clearTimeout(heroRevealTimer);
       window.removeEventListener('scroll', handleNavScroll);
     };
   }, []);

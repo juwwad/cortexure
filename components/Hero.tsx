@@ -27,6 +27,7 @@ export default function Hero() {
         let W = 0,
             H = 0;
         let pts: Point[] = [];
+        let rafId = 0;
         let mX = canvas.offsetWidth / 2,
             mY = canvas.offsetHeight / 2;
 
@@ -111,7 +112,7 @@ export default function Hero() {
                 ctx.fill();
             });
 
-            requestAnimationFrame(drawMesh);
+            rafId = requestAnimationFrame(drawMesh);
         }
 
         const hero = document.getElementById('hero');
@@ -122,6 +123,7 @@ export default function Hero() {
         drawMesh();
 
         return () => {
+            cancelAnimationFrame(rafId);
             hero?.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('resize', resizeMesh);
         };
