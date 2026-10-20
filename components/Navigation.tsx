@@ -25,7 +25,6 @@ export default function Navigation() {
       </div>
       <button
         className="nav-hamburger"
-        id="hamburger"
         aria-label="Menu"
         onClick={() => setMenuOpen(!menuOpen)}
       >
