@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 
 export default function Cursor() {
   useEffect(() => {
+    // The custom cursor is pointless without a precise pointer; leave the native cursor alone.
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
     const cur = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
     let mx = 0,
