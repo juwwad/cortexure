@@ -27,6 +27,8 @@ export default function Navigation() {
         className="nav-hamburger"
         id="hamburger"
         aria-label="Menu"
+        aria-expanded={menuOpen}
+        aria-controls="mobile-menu"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <span></span>
