@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function Navigation() {
@@ -9,6 +9,17 @@ export default function Navigation() {
   const closeMobile = () => {
     setMenuOpen(false);
   };
+
+  useEffect(() => {
+    // Close the mobile menu when the viewport grows past the mobile breakpoint
+    // (globals.css switches the nav layout at max-width: 680px).
+    const mq = window.matchMedia('(min-width: 681px)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    mq.addEventListener('change', handleChange);
+    return () => mq.removeEventListener('change', handleChange);
+  }, []);
 
   return (
     <nav id="nav">
