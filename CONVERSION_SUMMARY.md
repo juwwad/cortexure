@@ -6,7 +6,7 @@ Your Axiom Inc. portfolio website has been successfully converted from vanilla H
 ## What Was Converted
 
 ### HTML File
-- **Single `Axiom Inc..html`** (1400+ lines)
+- **Single `cortexture.html`** (the pre-conversion file, since removed from the repo)
 - Inline CSS styles
 - Vanilla JavaScript
 
@@ -68,14 +68,16 @@ Your Axiom Inc. portfolio website has been successfully converted from vanilla H
 
 ## Feature Parity
 
-✅ All original features preserved:
+✅ Features carried over:
 - Custom cursor with hover effects
 - Interactive mesh canvas
 - Smooth scroll animations
 - Mobile responsive design
 - Terminal-style contact form
-- Marquee animation
 - All visual effects and styling
+
+> Note: the original marquee strip was not carried over — no component renders
+> it. The leftover `.marquee*` rules in `globals.css` are unused.
 
 ## Installation & Usage
 
@@ -218,5 +220,5 @@ Ready to deploy on:
 
 ---
 
-**Original HTML**: 1 file, 1400+ lines
+**Original HTML**: 1 file (since removed)
 **New Next.js**: 11 files, better organized, TypeScript, production-ready! 🎉

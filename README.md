@@ -8,27 +8,26 @@ A premium portfolio website built with **Next.js 14**, **TypeScript**, and **Rea
 - 🎯 Custom cursor with hover effects
 - 📱 Fully responsive design (mobile, tablet, desktop)
 - 🎨 Modern design system with CSS custom properties
-- ⚡ Server-side rendering with Next.js
+- ⚡ Statically exported with Next.js (`output: "export"`)
 - 🔤 TypeScript for type safety
 - 🎭 Smooth scroll reveals and animations
-- 📧 Contact form with form validation
-- 🌐 SEO optimized with Next.js metadata API
+- 📧 Contact form UI (front-end only — see below)
+- 🌐 SEO optimized with the Next.js metadata API
 
 ## Tech Stack
 
-- **Framework**: Next.js 14.0+
+- **Framework**: Next.js 14
 - **Language**: TypeScript 5
 - **UI Library**: React 18.2+
-- **Styling**: CSS3 (Global styles with CSS custom properties)
+- **Styling**: CSS3 (global styles with CSS custom properties)
 - **Animations**: CSS animations and requestAnimationFrame
 
 ## Project Structure
 
 ```
-Axiom Inc./
 ├── app/
 │   ├── layout.tsx          # Root layout with metadata
-│   ├── page.tsx            # Home page
+│   ├── page.tsx            # Home page (client component)
 │   └── globals.css         # Global styles
 ├── components/
 │   ├── Cursor.tsx          # Custom cursor component
@@ -50,7 +49,7 @@ Axiom Inc./
 ### Prerequisites
 
 - Node.js 18.17 or later
-- npm or yarn
+- npm
 
 ### Installation
 
@@ -68,9 +67,18 @@ npm run dev
 
 ### Build for Production
 
+The app is configured with `output: "export"`, so `next build` writes a static
+site to `out/`:
+
 ```bash
 npm run build
-npm start
+npm start   # serves the exported site from out/ via `serve`
+```
+
+Lint the project with:
+
+```bash
+npm run lint
 ```
 
 ## Key Components
@@ -92,9 +100,8 @@ npm start
 
 ### Contact Form
 - Terminal-style UI design
-- Form validation
-- Expands on input
-- Ready for Supabase integration (see comments in Footer.tsx)
+- Front-end state and validation only — submission is simulated and does not
+  send data anywhere yet. Wiring it to a backend (e.g. Supabase) is a follow-up.
 
 ## Customization
 
@@ -116,7 +123,7 @@ Fonts are loaded from Google Fonts in `app/layout.tsx`:
 - **DM Mono**: Code/terminal text
 
 ### Content
-Edit component files in `components/` directory to modify:
+Edit component files in the `components/` directory to modify:
 - Services data
 - Projects showcase
 - Team values
@@ -124,11 +131,10 @@ Edit component files in `components/` directory to modify:
 
 ## Performance Optimizations
 
-- Server Components where possible
+- Static export — no server runtime required
 - CSS animations instead of JS for performance
 - Efficient canvas rendering with requestAnimationFrame
 - Intersection Observer for lazy scroll reveals
-- Optimized image formats and lazy loading ready
 
 ## Browser Support
 
@@ -137,21 +143,10 @@ Edit component files in `components/` directory to modify:
 - Safari: Latest 2 versions
 - Mobile browsers: iOS Safari 12+, Chrome Android
 
-## Integration Ready
-
-### Supabase Integration
-The contact form in `Footer.tsx` includes comments showing how to integrate with Supabase:
-```typescript
-// See Footer.tsx for commented integration code
-const { error } = await supabase
-  .from('leads')
-  .insert({ idea, name, email, service, budget });
-```
-
 ## License
 
 © 2025 Axiom Inc. Studio. All rights reserved.
 
 ## Support
 
-For questions or issues, please refer to the original HTML implementation or check Next.js documentation.
+For questions or issues, please check the Next.js documentation.
