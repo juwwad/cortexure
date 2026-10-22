@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: 'Axiom Inc — AI Engineering x Premium Web Development',
   description:
     'Axiom Inc builds AI-powered digital products and premium web experiences at the intersection of engineering rigor and design elegance.',
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
