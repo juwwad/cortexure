@@ -4,9 +4,7 @@
 :root {
   --bg: #FAFAF8;
   --surface: #FFFFFF;
-  --surface2: #F5F5F2;
   --border: rgba(0,0,0,0.07);
-  --border2: rgba(0,0,0,0.12);
   --ink: #0D0D0B;
   --ink2: #5C5C56;
   --ink3: #9A9A94;
@@ -15,7 +13,6 @@
   --green-dk: #1B4332;
   --radius: 14px;
   --radius-lg: 20px;
-  --radius-xl: 28px;
 }
 
 html { scroll-behavior: smooth; }
@@ -611,25 +608,6 @@ footer::before {
   font-size: 11px; color: rgba(255,255,255,.2);
   letter-spacing: .03em; margin-top: 1.5rem;
 }
-
-/* ─── MARQUEE ─── */
-.marquee-wrap {
-  background: var(--surface); border-top: 0.5px solid var(--border);
-  border-bottom: 0.5px solid var(--border);
-  padding: 18px 0; overflow: hidden; white-space: nowrap;
-}
-.marquee-track {
-  display: inline-flex; animation: marquee 28s linear infinite;
-}
-.marquee-item {
-  display: inline-flex; align-items: center; gap: 16px;
-  padding: 0 32px;
-  font-family: 'Syne', sans-serif;
-  font-size: 13px; font-weight: 600; letter-spacing: .04em;
-  color: var(--ink3); text-transform: uppercase;
-}
-.marquee-dot { width: 4px; height: 4px; background: var(--green); border-radius: 50%; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {

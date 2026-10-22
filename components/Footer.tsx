@@ -154,7 +154,6 @@ export default function Footer() {
             <div className="term-actions">
               <button
                 className="term-btn"
-                id="term-send"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
