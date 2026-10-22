@@ -25,11 +25,20 @@ body {
   background: var(--bg);
   color: var(--ink);
   overflow-x: hidden;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
 }
 
+/* The custom cursor replaces the native one only where a precise pointer exists. */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+}
+
 /* ─── CUSTOM CURSOR ─── */
+/* Hidden unless a precise pointer is present, so touch devices keep the native cursor. */
+.cursor, .cursor-ring { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cursor, .cursor-ring { display: block; }
+}
 .cursor {
   position: fixed;
   width: 10px; height: 10px;
@@ -349,6 +358,10 @@ section {
   transition: opacity .3s;
 }
 .project-card:hover .project-overlay { opacity: 1; }
+/* Without hover the metrics are unreachable, so show them by default on touch devices. */
+@media (hover: none) {
+  .project-overlay { opacity: 1; }
+}
 .project-metrics { display: flex; gap: 1.5rem; }
 .metric { text-align: left; }
 .metric-val {
