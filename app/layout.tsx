@@ -15,8 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {/* Next.js emits its own charset and viewport tags; declaring them here
+            as well produced duplicate, conflicting meta tags in the export. */}
         {/* Marks scripting as available before first paint, so JS-only reveal
             animations do not hide content from clients that never run JS. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
