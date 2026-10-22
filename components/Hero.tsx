@@ -118,7 +118,15 @@ export default function Hero() {
 
         const hero = document.getElementById('hero');
         hero?.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('resize', resizeMesh);
+
+        // Keeps the canvas backing store in step with its CSS box. This is not a
+        // motion effect, so it stays registered under reduced motion; since the
+        // animation loop is off, the mesh must be repainted once after a resize.
+        const handleResize = () => {
+            resizeMesh();
+            if (reduceMotion) drawMesh();
+        };
+        window.addEventListener('resize', handleResize);
 
         resizeMesh();
         drawMesh();
@@ -126,7 +134,7 @@ export default function Hero() {
         return () => {
             cancelAnimationFrame(rafId);
             hero?.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('resize', resizeMesh);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
