@@ -117,10 +117,8 @@ export default function Hero() {
         }
 
         const hero = document.getElementById('hero');
-        if (!reduceMotion) {
-            hero?.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('resize', resizeMesh);
-        }
+        hero?.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('resize', resizeMesh);
 
         resizeMesh();
         drawMesh();
