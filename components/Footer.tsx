@@ -101,6 +101,7 @@ export default function Footer() {
             <input
               className="term-input"
               id="term-main"
+              aria-label="Describe your project idea"
               placeholder="Describe your project idea..."
               autoComplete="off"
               value={projectIdea}
