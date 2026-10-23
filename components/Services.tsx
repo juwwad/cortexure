@@ -6,7 +6,7 @@ export default function Services() {
       title: 'Web Development',
       description:
         'Production-grade Next.js applications. Server components, edge rendering, and architecture that scales with your ambition without compromising developer experience.',
-      tags: ['Next.js 15', 'TypeScript', 'Supabase', 'Edge Functions', 'Vercel'],
+      tags: ['Next.js', 'TypeScript', 'Edge Functions', 'Vercel'],
     },
     {
       num: '02',
