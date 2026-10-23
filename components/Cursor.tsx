@@ -2,6 +2,11 @@
 
 import { useEffect } from 'react';
 
+// Elements that switch the cursor into its "hovered" state. Matched with
+// closest() from the event target so elements rendered after mount are covered.
+const HOVER_SELECTOR =
+  'a,button,input,select,.service-card,.project-card,.value-card,.testimonial';
+
 export default function Cursor() {
   useEffect(() => {
     // The custom cursor is pointless without a precise pointer; leave the native cursor alone.
@@ -59,36 +64,28 @@ export default function Cursor() {
       return '';
     };
 
+    // Recolour the cursor for the background it currently sits on. Driven from
+    // the animation frame rather than every mousemove, so a burst of pointer
+    // events costs one style read per frame instead of one per event.
+    const syncColor = () => {
+      const isDark = isDarkColor(getRGB(getBackgroundColorUnderCursor(mx, my)));
+      if (cur) cur.style.background = isDark ? '#FFFFFF' : 'var(--ink)';
+      if (ring) {
+        ring.style.borderColor = isDark
+          ? 'rgba(255, 255, 255, 0.35)'
+          : 'rgba(0, 0, 0, 0.22)';
+      }
+    };
+
+    let colorDirty = false;
+
     const handleMouseMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
+      colorDirty = true;
       if (cur) {
         cur.style.left = mx + 'px';
         cur.style.top = my + 'px';
-
-        // Check background color and adjust cursor color
-        const bgColor = getBackgroundColorUnderCursor(mx, my);
-        const rgb = getRGB(bgColor);
-        const isDark = isDarkColor(rgb);
-
-        if (isDark) {
-          cur.style.background = '#FFFFFF';
-        } else {
-          cur.style.background = 'var(--ink)';
-        }
-      }
-
-      // Also update ring color
-      if (ring) {
-        const bgColor = getBackgroundColorUnderCursor(mx, my);
-        const rgb = getRGB(bgColor);
-        const isDark = isDarkColor(rgb);
-
-        if (isDark) {
-          ring.style.borderColor = 'rgba(255, 255, 255, 0.35)';
-        } else {
-          ring.style.borderColor = 'rgba(0, 0, 0, 0.22)';
-        }
       }
     };
 
@@ -100,11 +97,35 @@ export default function Cursor() {
       cur?.classList.remove('clicking');
     };
 
+    // Event delegation: hover state is resolved from the event target, so
+    // elements added after mount (mobile menu, footer success message) are covered.
+    const setHovered = (on: boolean) => {
+      cur?.classList.toggle('hovered', on);
+      ring?.classList.toggle('hovered', on);
+    };
+
+    const handlePointerOver = (e: MouseEvent) => {
+      const target = e.target;
+      if (target instanceof Element && target.closest(HOVER_SELECTOR)) setHovered(true);
+    };
+
+    const handlePointerOut = (e: MouseEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element) || !target.closest(HOVER_SELECTOR)) return;
+      // Moving between two hover targets must not flicker the cursor off.
+      const related = e.relatedTarget;
+      if (related instanceof Element && related.closest(HOVER_SELECTOR)) return;
+      setHovered(false);
+    };
+
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseover', handlePointerOver);
+    document.addEventListener('mouseout', handlePointerOut);
 
     // Animate ring
+    let rafId = 0;
     const animRing = () => {
       rx += (mx - rx) * 0.13;
       ry += (my - ry) * 0.13;
@@ -112,29 +133,21 @@ export default function Cursor() {
         ring.style.left = rx + 'px';
         ring.style.top = ry + 'px';
       }
-      requestAnimationFrame(animRing);
+      if (colorDirty) {
+        colorDirty = false;
+        syncColor();
+      }
+      rafId = requestAnimationFrame(animRing);
     };
-    animRing();
-
-    // Hover elements
-    const hoverEls = document.querySelectorAll(
-      'a,button,input,select,.service-card,.project-card,.value-card,.testimonial'
-    );
-    hoverEls.forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        cur?.classList.add('hovered');
-        ring?.classList.add('hovered');
-      });
-      el.addEventListener('mouseleave', () => {
-        cur?.classList.remove('hovered');
-        ring?.classList.remove('hovered');
-      });
-    });
+    rafId = requestAnimationFrame(animRing);
 
     return () => {
+      cancelAnimationFrame(rafId);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseover', handlePointerOver);
+      document.removeEventListener('mouseout', handlePointerOut);
     };
   }, []);
 
