@@ -4,7 +4,7 @@ export default function Projects() {
       featured: true,
       gradient: 'linear-gradient(135deg, #0f1c14 0%, #1B4332 40%, #2D6A4F 75%, #1a3a2a 100%)',
       svg: (
-        <svg width="180" height="100" viewBox="0 0 180 100" fill="none" opacity="0.25">
+        <svg width="180" height="100" viewBox="0 0 180 100" fill="none" opacity="0.25" aria-hidden="true" focusable="false">
           <rect x="20" y="18" width="60" height="5" rx="2.5" fill="white" />
           <rect x="20" y="30" width="90" height="3.5" rx="1.75" fill="white" />
           <rect x="20" y="42" width="72" height="3.5" rx="1.75" fill="white" />
@@ -31,7 +31,7 @@ export default function Projects() {
       featured: false,
       gradient: 'linear-gradient(135deg, #1a1020 0%, #3d2460 55%, #5a3e8c 100%)',
       svg: (
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" opacity="0.25">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" opacity="0.25" aria-hidden="true" focusable="false">
           <circle cx="50" cy="50" r="36" stroke="white" strokeWidth="1.5" />
           <circle cx="50" cy="50" r="22" stroke="white" strokeWidth="1" />
           <circle cx="50" cy="50" r="10" stroke="white" strokeWidth="0.75" />
@@ -53,7 +53,7 @@ export default function Projects() {
       featured: false,
       gradient: 'linear-gradient(135deg, #181210 0%, #4a2010 50%, #8a3a18 100%)',
       svg: (
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" opacity="0.25">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" opacity="0.25" aria-hidden="true" focusable="false">
           <rect x="22" y="22" width="24" height="24" rx="4" fill="white" />
           <rect x="54" y="22" width="24" height="24" rx="4" fill="white" opacity=".6" />
           <rect x="22" y="54" width="24" height="24" rx="4" fill="white" opacity=".4" />
