@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type HTMLAttributes } from 'react';
 
 export default function Footer() {
   const [projectIdea, setProjectIdea] = useState('');
@@ -108,7 +108,18 @@ export default function Footer() {
               onKeyDown={handleIdeaKeyDown}
             />
           </div>
-          <div className={`term-expand ${expandForm ? 'open' : ''}`} id="term-expand">
+          {/* While collapsed the panel is only hidden visually, so its controls
+              stay tabbable and exposed to assistive tech. `inert` removes the
+              subtree from both the tab order and the accessibility tree; the
+              matching `aria-hidden` covers browsers without `inert` support.
+              React 18 does not serialise the boolean `inert` prop, so it is
+              passed as an empty string through a cast. */}
+          <div
+            className={`term-expand ${expandForm ? 'open' : ''}`}
+            id="term-expand"
+            aria-hidden={!expandForm}
+            {...(expandForm ? {} : ({ inert: '' } as unknown as HTMLAttributes<HTMLDivElement>))}
+          >
             <div className="term-field">
               <label htmlFor="t-name">Your name</label>
               <input
