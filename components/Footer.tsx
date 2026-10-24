@@ -181,14 +181,14 @@ export default function Footer() {
             <p className="footer-copy">© 2025 Axiom Inc. Studio. All rights reserved.</p>
           </div>
           <div className="footer-col">
-            <h5>Studio</h5>
+            <h3>Studio</h3>
             <a href="#services">Services</a>
             <a href="#projects">Work</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
           <div className="footer-col">
-            <h5>Connect</h5>
+            <h3>Connect</h3>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
               LinkedIn
             </a>
