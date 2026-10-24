@@ -17,6 +17,22 @@
 
 html { scroll-behavior: smooth; }
 
+/* Skip link: off-screen until focused, then pinned above the nav. */
+.skip-link {
+  position: fixed; top: 0; left: 0;
+  transform: translateY(-120%);
+  z-index: 10000;
+  background: var(--ink); color: #fff;
+  padding: 10px 18px; border-radius: 0 0 8px 0;
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: transform .15s ease-out;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
   background: var(--bg);
