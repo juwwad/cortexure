@@ -75,7 +75,7 @@ export default function About() {
           {values.map((value, idx) => (
             <div key={idx} className="value-card">
               <span className="value-mark">{value.mark}</span>
-              <h4>{value.title}</h4>
+              <h3>{value.title}</h3>
               <p>{value.description}</p>
             </div>
           ))}
