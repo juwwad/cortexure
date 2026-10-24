@@ -57,16 +57,18 @@ export default function Home() {
       <div className="noise"></div>
       <Cursor />
       <Navigation />
-      <Hero />
-      <div className="divider"></div>
-      <Services />
-      <div className="divider"></div>
-      <Projects />
-      <div className="divider"></div>
-      <About />
-      <div className="divider"></div>
-      <Testimonials />
-      <Footer />
+      <main id="main">
+        <Hero />
+        <div className="divider"></div>
+        <Services />
+        <div className="divider"></div>
+        <Projects />
+        <div className="divider"></div>
+        <About />
+        <div className="divider"></div>
+        <Testimonials />
+        <Footer />
+      </main>
     </>
   );
 }
