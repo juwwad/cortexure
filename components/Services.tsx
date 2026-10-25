@@ -5,8 +5,8 @@ export default function Services() {
       icon: '⬡',
       title: 'Web Development',
       description:
-        'Production-grade Next.js applications. Server components, edge rendering, and architecture that scales with your ambition without compromising developer experience.',
-      tags: ['Next.js', 'TypeScript', 'Edge Functions', 'Vercel'],
+        'Production-grade Next.js applications. Server components, static export, and architecture that scales with your ambition without compromising developer experience.',
+      tags: ['Next.js', 'TypeScript', 'React', 'Static Export'],
     },
     {
       num: '02',
