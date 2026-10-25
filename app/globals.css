@@ -556,6 +556,17 @@ footer::before {
 .term-field input:focus, .term-field select:focus {
   border-color: rgba(45,106,79,.7);
 }
+/* The form controls opt out of the native ring (`outline: none` above), so a
+   replacement is required for WCAG 2.4.7. `:focus-visible` keeps the mouse
+   experience unchanged. The mint ring is used instead of `--green` because the
+   panel background is near-black and `--green` only reaches 2.8:1, below the
+   3:1 non-text contrast minimum (WCAG 1.4.11). */
+.term-input:focus-visible,
+.term-field input:focus-visible,
+.term-field select:focus-visible {
+  outline: 2px solid #95D5B2;
+  outline-offset: 2px;
+}
 .term-field select option { background: #1a1a18; }
 
 .term-actions { display: flex; align-items: center; gap: 14px; margin-top: .5rem; }
