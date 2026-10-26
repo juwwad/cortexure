@@ -199,21 +199,6 @@ export default function Footer() {
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
-          <div className="footer-col">
-            <h5>Connect</h5>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </a>
-            <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer">
-              Dribbble
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              Twitter / X
-            </a>
-          </div>
         </div>
       </div>
     </footer>
