@@ -79,6 +79,8 @@ export default function Cursor() {
 
     let colorDirty = false;
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const handleMouseMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
@@ -86,6 +88,19 @@ export default function Cursor() {
       if (cur) {
         cur.style.left = mx + 'px';
         cur.style.top = my + 'px';
+      }
+      // Without the animation loop the ring must track the pointer directly,
+      // otherwise it would sit frozen at its last smoothed position. The colour
+      // is normally synced per frame, so it must be synced here instead.
+      if (reduceMotion) {
+        rx = mx;
+        ry = my;
+        if (ring) {
+          ring.style.left = mx + 'px';
+          ring.style.top = my + 'px';
+        }
+        colorDirty = false;
+        syncColor();
       }
     };
 
@@ -124,7 +139,8 @@ export default function Cursor() {
     document.addEventListener('mouseover', handlePointerOver);
     document.addEventListener('mouseout', handlePointerOut);
 
-    // Animate ring
+    // Animate ring. Under reduced motion the smoothing loop is skipped entirely
+    // and the ring follows the pointer directly (see handleMouseMove).
     let rafId = 0;
     const animRing = () => {
       rx += (mx - rx) * 0.13;
@@ -139,7 +155,7 @@ export default function Cursor() {
       }
       rafId = requestAnimationFrame(animRing);
     };
-    rafId = requestAnimationFrame(animRing);
+    if (!reduceMotion) rafId = requestAnimationFrame(animRing);
 
     return () => {
       cancelAnimationFrame(rafId);

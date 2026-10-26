@@ -41,16 +41,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* The custom cursor replaces the native one only where a precise pointer exists. */
+/* The custom cursor replaces the native one only where a precise pointer exists.
+   The `.js` class is set on <html> by an inline script before first paint, so
+   with JavaScript disabled the native cursor is never hidden and the custom
+   cursor elements are never shown. */
 @media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
+  html.js body { cursor: none; }
 }
 
 /* ─── CUSTOM CURSOR ─── */
 /* Hidden unless a precise pointer is present, so touch devices keep the native cursor. */
 .cursor, .cursor-ring { display: none; }
 @media (hover: hover) and (pointer: fine) {
-  .cursor, .cursor-ring { display: block; }
+  html.js .cursor, html.js .cursor-ring { display: block; }
 }
 .cursor {
   position: fixed;
