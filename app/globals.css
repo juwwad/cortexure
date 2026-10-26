@@ -580,7 +580,7 @@ footer::before {
 
 /* Footer bottom */
 .footer-grid {
-  display: grid; grid-template-columns: 1fr auto auto;
+  display: grid; grid-template-columns: 1fr auto;
   gap: 3rem; align-items: end;
   margin-top: 5rem;
   border-top: 0.5px solid rgba(255,255,255,.08);
