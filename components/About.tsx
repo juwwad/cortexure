@@ -26,12 +26,6 @@ export default function About() {
     },
   ];
 
-  const stats = [
-    { num: '48', desc: 'Products shipped' },
-    { num: '6', desc: 'Years operating' },
-    { num: '100%', desc: 'Client retention' },
-  ];
-
   return (
     <section id="about">
       <div className="about-grid">
@@ -52,17 +46,16 @@ export default function About() {
             </p>
             <p style={{ marginTop: '1rem' }}>
               We operate as a focused team — no bloat, no middle layers. Senior engineers and
-              designers work directly on every engagement, delivering higher quality output and
-              faster iteration cycles than agencies four times our size.
+              designers work directly on every engagement, so iteration stays fast and
+              communication stays direct.
             </p>
           </div>
-          <div className="stat-row reveal delay3">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat">
-                <span className="stat-num">{stat.num}</span>
-                <span className="stat-desc">{stat.desc}</span>
-              </div>
-            ))}
+          <div className="reveal delay3">
+            <p>
+              We are an early-stage studio, so this site intentionally avoids invented
+              client logos, headcount, and performance numbers. The work below shows the
+              kind of systems we build.
+            </p>
           </div>
           <div className="reveal delay4">
             <a href="#contact" className="btn-primary" style={{ display: 'inline-flex' }}>

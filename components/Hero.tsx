@@ -150,7 +150,7 @@ export default function Hero() {
             <div className="hero-inner">
                 <div className="hero-badge">
                     <span className="hero-badge-dot"></span>
-                    AI Engineering Studio · Est. 2019
+                    AI Engineering Studio
                 </div>
                 <h1 className="hero-title">
                     Where <em>intelligence</em>

@@ -125,7 +125,7 @@ export default function Footer() {
               <label htmlFor="t-name">Your name</label>
               <input
                 id="t-name"
-                placeholder="e.g. Sarah Chen"
+                placeholder="e.g. Jordan Avery"
                 value={formData.name}
                 onChange={handleFormChange}
               />

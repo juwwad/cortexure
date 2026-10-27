@@ -17,15 +17,15 @@ export default function Projects() {
         </svg>
       ),
       metrics: [
-        { val: '99', lbl: 'Perf Score' },
-        { val: '3.2×', lbl: 'Conv. Lift' },
-        { val: '0.8s', lbl: 'LCP' },
-        { val: '$4.2M', lbl: 'ARR Driven' },
+        { val: '99', lbl: 'Target Perf' },
+        { val: '3.2×', lbl: 'Target Conv.' },
+        { val: '0.8s', lbl: 'Target LCP' },
+        { val: '$4.2M', lbl: 'Target ARR' },
       ],
-      category: 'Fintech · AI Dashboard · 2024',
-      title: 'Vesta Capital Intelligence Platform',
+      category: 'Illustrative · Fintech · AI Dashboard',
+      title: 'Portfolio Intelligence Platform',
       description:
-        'Real-time portfolio analysis with LLM-powered narrative generation and automated regulatory reporting across 14 asset classes.',
+        'A reference architecture for real-time portfolio analysis with LLM-powered narrative generation and automated regulatory reporting across asset classes.',
     },
     {
       featured: false,
@@ -41,13 +41,13 @@ export default function Projects() {
         </svg>
       ),
       metrics: [
-        { val: '84%', lbl: 'AI Accuracy' },
-        { val: '12k', lbl: 'Daily Users' },
+        { val: '84%', lbl: 'Target Accuracy' },
+        { val: '12k', lbl: 'Target Users' },
       ],
-      category: 'Health Tech · ML · 2024',
-      title: 'Meridian Diagnostics Engine',
+      category: 'Illustrative · Health Tech · ML',
+      title: 'Diagnostics Engine',
       description:
-        'Computer vision pipeline for early anomaly detection with 84% clinical precision, deployed in 6 NHS trusts.',
+        'A reference computer-vision pipeline for early anomaly detection, designed for clinical review workflows and integration with hospital systems.',
     },
     {
       featured: false,
@@ -61,27 +61,27 @@ export default function Projects() {
         </svg>
       ),
       metrics: [
-        { val: '98', lbl: 'Lighthouse' },
-        { val: '40%', lbl: 'Ops Saved' },
+        { val: '98', lbl: 'Target Lighthouse' },
+        { val: '40%', lbl: 'Target Ops Saved' },
       ],
-      category: 'E-Commerce · Automation · 2023',
-      title: 'Bloom Supply Chain OS',
+      category: 'Illustrative · E-Commerce · Automation',
+      title: 'Supply Chain OS',
       description:
-        'End-to-end inventory intelligence with predictive ordering, reducing manual operations by 40% and achieving zero downtime over 18 months.',
+        'A reference inventory-intelligence system with predictive ordering and resilient, low-maintenance infrastructure.',
     },
   ];
 
   return (
     <section id="projects">
-      <p className="section-label reveal">Selected work</p>
+      <p className="section-label reveal">Reference work</p>
       <h2 className="section-title reveal delay1">
-        Products we&apos;ve
+        Systems we
         <br />
-        shipped.
+        build.
       </h2>
       <p className="section-sub reveal delay2">
-        A curated selection of recent engagements. Hover to reveal performance metrics and
-        engineering outcomes.
+        Illustrative examples of the kind of AI products and platforms we design and build.
+        Hover to reveal target engineering metrics — not client results.
       </p>
 
       <div className="projects-grid">
