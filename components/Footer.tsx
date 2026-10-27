@@ -203,7 +203,7 @@ export default function Footer() {
               <button
                 type="submit"
                 className="term-btn"
-                disabled={isSubmitting}
+                disabled={isSubmitting || submitted}
               >
                 {isSubmitting ? 'Sending...' : 'Send brief'} <span>→</span>
               </button>
