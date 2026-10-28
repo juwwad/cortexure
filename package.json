@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^14.0.0",
+    "next": "15.5.28",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -18,9 +18,13 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.35",
+    "eslint-config-next": "15.5.28",
     "eslint-plugin-react-hooks": "^4.6.2",
     "serve": "^14.2.6",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "^8.5.31",
+    "compression": "^1.8.2"
   }
 }
