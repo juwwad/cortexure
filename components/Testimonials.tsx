@@ -1,29 +1,31 @@
 export default function Testimonials() {
-  const testimonials = [
+  // Axiom Inc is pre-launch. Rather than attribute quotes to invented people or
+  // clients, this section states commitments we can stand behind today.
+  const commitments = [
     {
       quote:
-        '"Axiom Inc. delivered a product that our entire engineering team is proud of. The quality and attention to detail was beyond anything we\'d seen from an agency."',
-      name: 'Sarah Chen',
-      role: 'CTO, Vesta Capital',
-      initials: 'SC',
+        'We scope in the open. You see the plan, the tradeoffs, and the estimate before a single line of code is written.',
+      title: 'Honest scoping',
+      detail: 'No padded timelines',
+      initials: '01',
       bgColor: '#D8F3DC',
       textColor: '#1B4332',
     },
     {
       quote:
-        '"They\'re the rare team that can speak both design language and machine learning fluently. That combination is incredibly hard to find, and it showed in the results."',
-      name: 'Marcus Kovács',
-      role: 'VP Product, Meridian Health',
-      initials: 'MK',
+        'One senior team, start to finish. The people who design the system are the people who build and ship it.',
+      title: 'Direct engineering',
+      detail: 'No handoffs to juniors',
+      initials: '02',
       bgColor: '#EDE9FE',
       textColor: '#4C1D95',
     },
     {
       quote:
-        '"Six months in, zero downtime, and our operations team saved 40% of their time. The ROI was evident within the first quarter after launch."',
-      name: 'Aisha Laurent',
-      role: 'COO, Bloom Commerce',
-      initials: 'AL',
+        'We hand over work you can own: documented, tested, and explained well enough for your team to extend it.',
+      title: 'Built to hand off',
+      detail: 'Documented and tested',
+      initials: '03',
       bgColor: '#FEF3C7',
       textColor: '#92400E',
     },
@@ -32,25 +34,25 @@ export default function Testimonials() {
   return (
     <div className="testimonials">
       <div className="testimonials-inner">
-        <p className="section-label reveal">Client voices</p>
-        <h2 className="section-title reveal delay1">What our clients say.</h2>
+        <p className="section-label reveal">How we work</p>
+        <h2 className="section-title reveal delay1">What we commit to.</h2>
         <div className="testimonials-grid">
-          {testimonials.map((testimonial, idx) => (
+          {commitments.map((commitment, idx) => (
             <div key={idx} className={`testimonial reveal delay${idx + 1}`}>
-              <p className="testimonial-quote">{testimonial.quote}</p>
+              <p className="testimonial-quote">{commitment.quote}</p>
               <div className="testimonial-author">
                 <div
                   className="author-avatar"
                   style={{
-                    background: testimonial.bgColor,
-                    color: testimonial.textColor,
+                    background: commitment.bgColor,
+                    color: commitment.textColor,
                   }}
                 >
-                  {testimonial.initials}
+                  {commitment.initials}
                 </div>
                 <div>
-                  <div className="author-name">{testimonial.name}</div>
-                  <div className="author-role">{testimonial.role}</div>
+                  <div className="author-name">{commitment.title}</div>
+                  <div className="author-role">{commitment.detail}</div>
                 </div>
               </div>
             </div>
