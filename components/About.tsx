@@ -46,7 +46,7 @@ export default function About() {
           </h2>
           <div className="reveal delay2">
             <p>
-              Axiom Inc was founded on a simple conviction: the best digital products emerge
+              Axiom Inc. was founded on a simple conviction: the best digital products emerge
               when rigorous engineering and precise design share the same first-principles
               foundation.
             </p>
