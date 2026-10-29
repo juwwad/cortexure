@@ -100,8 +100,14 @@ npm run lint
 
 ### Contact Form
 - Terminal-style UI design
-- Front-end state and validation only — submission is simulated and does not
-  send data anywhere yet. Wiring it to a backend (e.g. Supabase) is a follow-up.
+- Front-end state and validation
+- Posts JSON to the endpoint in `NEXT_PUBLIC_CONTACT_ENDPOINT`. Because the
+  site is a static export there is no server runtime, so the endpoint must be
+  an external form/email service that accepts a JSON `POST` and allows CORS
+  from the deployed origin (see `.env.example`).
+- Without that variable the form refuses to fake a success: it shows an error
+  and, if `NEXT_PUBLIC_CONTACT_EMAIL` is set, points the visitor at that
+  address.
 
 ## Customization
 

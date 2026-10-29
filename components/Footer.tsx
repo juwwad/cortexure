@@ -2,6 +2,13 @@
 
 import { useState, type HTMLAttributes } from 'react';
 
+// The site is a static export (`output: "export"`), so there is no server
+// runtime to host an API route. Instead the form posts to an endpoint supplied
+// at build time. When no endpoint is configured the form refuses to pretend it
+// sent anything and points the visitor at a real contact address.
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? '';
+const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
+
 export default function Footer() {
   const [projectIdea, setProjectIdea] = useState('');
   const [expandForm, setExpandForm] = useState(false);
@@ -12,11 +19,14 @@ export default function Footer() {
     budget: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleIdeaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setProjectIdea(value);
+    setSubmitted(false);
+    setError('');
     if (value.trim().length > 6) {
       setExpandForm(true);
     } else {
@@ -61,20 +71,42 @@ export default function Footer() {
       return;
     }
 
-    setIsSubmitting(true);
+    if (!CONTACT_ENDPOINT) {
+      setError(
+        CONTACT_EMAIL
+          ? `This form isn't connected yet — email us directly at ${CONTACT_EMAIL}.`
+          : "This form isn't connected yet — please reach out to us directly and we'll pick it up from there.",
+      );
+      return;
+    }
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ ...formData, projectIdea }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
       setSubmitted(true);
-      // Reset form after 2 seconds
-      setTimeout(() => {
-        setProjectIdea('');
-        setFormData({ name: '', email: '', service: '', budget: '' });
-        setExpandForm(false);
-        setSubmitted(false);
-      }, 2000);
-    }, 1000);
+    } catch {
+      setError(
+        CONTACT_EMAIL
+          ? `We couldn't send that. Please try again, or email us at ${CONTACT_EMAIL}.`
+          : "We couldn't send that. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -115,11 +147,15 @@ export default function Footer() {
               matching `aria-hidden` covers browsers without `inert` support.
               React 18 does not serialise the boolean `inert` prop, so it is
               passed as an empty string through a cast. */}
-          <div
+          <form
             className={`term-expand ${expandForm ? 'open' : ''}`}
             id="term-expand"
             aria-hidden={!expandForm}
-            {...(expandForm ? {} : ({ inert: '' } as unknown as HTMLAttributes<HTMLDivElement>))}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            {...(expandForm ? {} : ({ inert: '' } as unknown as HTMLAttributes<HTMLFormElement>))}
           >
             <div className="term-field">
               <label htmlFor="t-name">Your name</label>
@@ -165,21 +201,27 @@ export default function Footer() {
             </div>
             <div className="term-actions">
               <button
+                type="submit"
                 className="term-btn"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
+                disabled={isSubmitting || submitted}
               >
                 {isSubmitting ? 'Sending...' : 'Send brief'} <span>→</span>
               </button>
               <span className="term-hint">We respond within 24 hours</span>
             </div>
             {submitted && (
-              <div className="term-success" style={{ display: 'flex' }}>
+              <div className="term-success" role="status" style={{ display: 'flex' }}>
                 <span className="term-success-icon">✓</span>
                 Received. We&apos;ll be in touch within 24 hours.
               </div>
             )}
-          </div>
+            {error && (
+              <div className="term-error" role="alert">
+                <span aria-hidden="true">!</span>
+                {error}
+              </div>
+            )}
+          </form>
         </div>
 
         {/* Footer columns */}
