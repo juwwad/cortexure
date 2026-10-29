@@ -125,22 +125,29 @@ export default function Hero() {
         const hero = document.getElementById('hero');
         hero?.addEventListener('mousemove', handleMouseMove);
 
-        // Keeps the canvas backing store in step with its CSS box. This is not a
-        // motion effect, so it stays registered under reduced motion; since the
-        // animation loop is off, the mesh must be repainted once after a resize.
-        const handleResize = () => {
+        // Observe the canvas box rather than the window: the hero is sized by its
+        // content, so its height can change without a window resize, and a window
+        // handler may read a pre-reflow height. The observer fires after layout,
+        // so the backing store always matches the element's settled size. This is
+        // not a motion effect, so it stays registered under reduced motion.
+        let repaintId = 0;
+        const observer = new ResizeObserver(() => {
             resizeMesh();
-            if (reduceMotion) drawMesh();
-        };
-        window.addEventListener('resize', handleResize);
+            if (reduceMotion) {
+                cancelAnimationFrame(repaintId);
+                repaintId = requestAnimationFrame(drawMesh);
+            }
+        });
+        observer.observe(canvas);
 
         resizeMesh();
         drawMesh();
 
         return () => {
             cancelAnimationFrame(rafId);
+            cancelAnimationFrame(repaintId);
+            observer.disconnect();
             hero?.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
