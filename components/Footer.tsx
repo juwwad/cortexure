@@ -145,8 +145,8 @@ export default function Footer() {
               stay tabbable and exposed to assistive tech. `inert` removes the
               subtree from both the tab order and the accessibility tree; the
               matching `aria-hidden` covers browsers without `inert` support.
-              React 18 does not serialise the boolean `inert` prop, so it is
-              passed as an empty string through a cast. */}
+              React 19 treats `inert` as a first-class boolean attribute, so it
+              must be passed as `true`; the empty string is rejected and dropped. */}
           <form
             className={`term-expand ${expandForm ? 'open' : ''}`}
             id="term-expand"
@@ -155,7 +155,7 @@ export default function Footer() {
               e.preventDefault();
               handleSubmit();
             }}
-            {...(expandForm ? {} : ({ inert: '' } as unknown as HTMLAttributes<HTMLFormElement>))}
+            {...(expandForm ? {} : ({ inert: true } as unknown as HTMLAttributes<HTMLFormElement>))}
           >
             <div className="term-field">
               <label htmlFor="t-name">Your name</label>
