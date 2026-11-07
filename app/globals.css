@@ -672,4 +672,7 @@ footer::before {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+  /* scroll-behavior is neither an animation nor a transition, so it needs its
+     own reset for the long in-page anchor scrolls. */
+  html { scroll-behavior: auto; }
 }
