@@ -1,7 +1,7 @@
 # Axiom Inc. HTML to Next.js Conversion Summary
 
 ## Overview
-Your Axiom Inc. portfolio website has been successfully converted from vanilla HTML to a modern **Next.js 14 + TypeScript** application.
+Your Axiom Inc. portfolio website has been successfully converted from vanilla HTML to a modern **Next.js 15 + TypeScript** application.
 
 ## What Was Converted
 
