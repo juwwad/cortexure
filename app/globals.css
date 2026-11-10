@@ -260,6 +260,13 @@ section {
   font-weight: 300; margin-bottom: 3.5rem;
 }
 
+/* 404 page shell */
+.not-found {
+  min-height: 60vh; display: flex;
+  flex-direction: column; justify-content: center; align-items: flex-start;
+}
+.not-found .section-sub { margin-bottom: 2rem; }
+
 /* ─── REVEAL ─── */
 /* Visible by default so content survives with JavaScript disabled. The
    hidden start state is scoped to `.js`, set before first paint in layout.tsx. */
