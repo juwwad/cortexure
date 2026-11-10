@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import Cursor from '@/components/Cursor';
+import ScrollProgress from '@/components/ScrollProgress';
+import RevealInit from '@/components/RevealInit';
 import Navigation from '@/components/Navigation';
+import Marquee from '@/components/Marquee';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
@@ -11,54 +13,16 @@ import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  useEffect(() => {
-    // Scroll reveal observer
-    const revealObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('in');
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
-
-    // Hero reveals immediately
-    const heroRevealTimer = setTimeout(() => {
-      document.querySelectorAll('#hero .reveal').forEach((el, i) => {
-        setTimeout(() => el.classList.add('in'), i * 130);
-      });
-    }, 80);
-
-    // Nav scroll effect
-    const handleNavScroll = () => {
-      const nav = document.getElementById('nav');
-      if (nav) {
-        if (window.scrollY > 40) {
-          nav.style.borderBottomColor = 'rgba(0,0,0,0.1)';
-        } else {
-          nav.style.borderBottomColor = 'rgba(0,0,0,0.07)';
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleNavScroll);
-
-    return () => {
-      revealObs.disconnect();
-      clearTimeout(heroRevealTimer);
-      window.removeEventListener('scroll', handleNavScroll);
-    };
-  }, []);
-
   return (
     <>
       <div className="noise"></div>
+      <ScrollProgress />
+      <RevealInit />
       <Cursor />
       <Navigation />
       <main id="main">
         <Hero />
+        <Marquee />
         <div className="divider"></div>
         <Services />
         <div className="divider"></div>

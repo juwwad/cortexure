@@ -42,3 +42,6 @@ ehthumbs.db
 
 # Testing
 coverage
+
+# Agent memory (local notes, not source)
+.openhands/memory/
