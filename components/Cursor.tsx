@@ -86,8 +86,8 @@ export default function Cursor() {
       my = e.clientY;
       colorDirty = true;
       if (cur) {
-        cur.style.left = mx + 'px';
-        cur.style.top = my + 'px';
+        cur.style.setProperty('--cx', mx + 'px');
+        cur.style.setProperty('--cy', my + 'px');
       }
       // Without the animation loop the ring must track the pointer directly,
       // otherwise it would sit frozen at its last smoothed position. The colour
@@ -96,8 +96,8 @@ export default function Cursor() {
         rx = mx;
         ry = my;
         if (ring) {
-          ring.style.left = mx + 'px';
-          ring.style.top = my + 'px';
+          ring.style.setProperty('--cx', mx + 'px');
+          ring.style.setProperty('--cy', my + 'px');
         }
         colorDirty = false;
         syncColor();
@@ -146,8 +146,8 @@ export default function Cursor() {
       rx += (mx - rx) * 0.13;
       ry += (my - ry) * 0.13;
       if (ring) {
-        ring.style.left = rx + 'px';
-        ring.style.top = ry + 'px';
+        ring.style.setProperty('--cx', rx + 'px');
+        ring.style.setProperty('--cy', ry + 'px');
       }
       if (colorDirty) {
         colorDirty = false;

@@ -55,31 +55,35 @@ body {
 @media (hover: hover) and (pointer: fine) {
   html.js .cursor, html.js .cursor-ring { display: block; }
 }
+/* Position is written to --cx/--cy and applied through transform, so tracking
+   the pointer composites instead of triggering layout on every mousemove. */
 .cursor {
-  position: fixed;
+  position: fixed; top: 0; left: 0;
   width: 10px; height: 10px;
   background: var(--ink);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  transform: translate3d(var(--cx, 0px), var(--cy, 0px), 0) translate(-50%, -50%);
   transition: width .15s, height .15s, background .2s;
-  will-change: left, top;
+  will-change: transform;
 }
 .cursor-ring {
-  position: fixed;
+  position: fixed; top: 0; left: 0;
   width: 38px; height: 38px;
   border: 1px solid rgba(0,0,0,0.22);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
-  transform: translate(-50%, -50%);
+  transform: translate3d(var(--cx, 0px), var(--cy, 0px), 0) translate(-50%, -50%);
   transition: width .25s, height .25s, border-color .2s;
-  will-change: left, top;
+  will-change: transform;
 }
 .cursor.hovered { width: 6px; height: 6px; background: var(--green); }
 .cursor-ring.hovered { width: 52px; height: 52px; border-color: rgba(45,106,79,0.35); }
-.cursor.clicking { transform: translate(-50%,-50%) scale(0.7); }
+.cursor.clicking {
+  transform: translate3d(var(--cx, 0px), var(--cy, 0px), 0) translate(-50%, -50%) scale(0.7);
+}
 
 /* ─── NOISE TEXTURE ─── */
 .noise {
@@ -189,17 +193,29 @@ nav {
   width: 100%;
 }
 .hero-badge {
+  position: relative;
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--green-lt); color: var(--green-dk);
   font-size: 11.5px; font-weight: 500;
   padding: 5px 14px; border-radius: 100px;
   letter-spacing: 0.05em; margin-bottom: 2.2rem;
   opacity: 0; transform: translateY(16px);
-  animation: fadeUp .6s .1s forwards, badgeGlow 4.5s 1s ease-in-out infinite;
+  animation: fadeUp .6s .1s forwards;
 }
-@keyframes badgeGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(45,106,79,0); }
-  50% { box-shadow: 0 0 0 7px rgba(45,106,79,.07); }
+/* Ring around the badge. Scale + opacity stay on the compositor, whereas the
+   old box-shadow pulse repainted the badge on every frame. */
+.hero-badge::after {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: inherit;
+  border: 1px solid rgba(45,106,79,.4);
+  pointer-events: none;
+  animation: badgeRing 4.5s 1.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes badgeRing {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.07); }
 }
 .hero-badge-dot {
   width: 6px; height: 6px; background: var(--green);
@@ -216,22 +232,34 @@ h1.hero-title {
   opacity: 0; transform: translateY(24px);
   animation: fadeUp .7s .22s forwards;
 }
-h1.hero-title em { font-style: normal; color: var(--green); }
-/* The highlighted word carries a slow gradient sweep. Guarded by @supports so
-   that a browser without background-clip:text keeps the solid green above. */
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+h1.hero-title em { position: relative; font-style: normal; color: var(--green); }
+/* A soft highlight sweeps across the highlighted word. This is a transform on a
+   pseudo-element overlay, so the sweep runs on the compositor; animating
+   background-position instead repainted the text glyphs every frame. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
   h1.hero-title em {
-    background: linear-gradient(100deg, var(--green) 0%, #52B788 45%, var(--green) 90%);
-    background-size: 220% 100%;
+    background-image: linear-gradient(100deg, var(--green) 0%, #52B788 48%, var(--green) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: titleShimmer 7s ease-in-out infinite;
+  }
+  h1.hero-title em::after {
+    content: attr(data-text);
+    position: absolute; inset: 0;
+    white-space: nowrap;
+    background: linear-gradient(100deg, transparent 42%, rgba(255,255,255,.92) 50%, transparent 58%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transform: translateX(-120%);
+    animation: titleShimmer 6s ease-in-out infinite;
+    will-change: transform;
+    pointer-events: none;
   }
 }
 @keyframes titleShimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
 }
 
 .hero-sub {
@@ -293,6 +321,7 @@ h1.hero-title em { font-style: normal; color: var(--green); }
   position: absolute; top: 0; left: 0;
   width: 45%; height: 100%; background: var(--green);
   animation: scrollTrace 2.2s ease-in-out infinite;
+  will-change: transform;
 }
 @keyframes scrollTrace {
   0% { transform: translateX(-120%); }
@@ -652,6 +681,7 @@ footer::before {
   width: 10px; height: 10px; border-radius: 50%;
 }
 /* The three window dots breathe in sequence, like an active terminal. */
+.term-dot { will-change: transform, opacity; }
 .term-dot:nth-child(1) { animation: dotPulse 3s ease-in-out infinite; }
 .term-dot:nth-child(2) { animation: dotPulse 3s ease-in-out .25s infinite; }
 .term-dot:nth-child(3) { animation: dotPulse 3s ease-in-out .5s infinite; }
@@ -782,11 +812,21 @@ footer::before {
 
 /* ─── MARQUEE ─── */
 .marquee-wrap {
+  position: relative;
   background: var(--surface);
   border-top: 0.5px solid var(--border);
   border-bottom: 0.5px solid var(--border);
   padding: 18px 0; overflow: hidden; white-space: nowrap;
 }
+/* Soften the clipped ends so keywords fade in and out instead of popping. */
+.marquee-wrap::before,
+.marquee-wrap::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 90px; z-index: 1;
+  pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--surface), transparent); }
+.marquee-wrap::after { right: 0; background: linear-gradient(270deg, var(--surface), transparent); }
 .marquee-track {
   display: inline-flex;
   animation: marquee 34s linear infinite;
