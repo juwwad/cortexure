@@ -69,12 +69,8 @@ export default function Cursor() {
     // events costs one style read per frame instead of one per event.
     const syncColor = () => {
       const isDark = isDarkColor(getRGB(getBackgroundColorUnderCursor(mx, my)));
-      if (cur) cur.style.background = isDark ? '#FFFFFF' : 'var(--ink)';
-      if (ring) {
-        ring.style.borderColor = isDark
-          ? 'rgba(255, 255, 255, 0.35)'
-          : 'rgba(0, 0, 0, 0.22)';
-      }
+      cur?.classList.toggle('dark-bg', isDark);
+      ring?.classList.toggle('dark-bg', isDark);
     };
 
     let colorDirty = false;

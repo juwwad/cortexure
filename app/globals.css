@@ -77,6 +77,11 @@ body {
   transition: width .25s, height .25s, border-color .2s;
   will-change: left, top;
 }
+/* The cursor colour tracks the background it sits on through this class rather
+   than an inline style, so the `.hovered` rules below can override it — an
+   inline style would win over any class regardless of specificity. */
+.cursor.dark-bg { background: #FFFFFF; }
+.cursor-ring.dark-bg { border-color: rgba(255,255,255,0.35); }
 .cursor.hovered { width: 6px; height: 6px; background: var(--green); }
 .cursor-ring.hovered { width: 52px; height: 52px; border-color: rgba(45,106,79,0.35); }
 .cursor.clicking { transform: translate(-50%,-50%) scale(0.7); }
