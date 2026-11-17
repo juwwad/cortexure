@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, type HTMLAttributes } from 'react';
+import { usePathname } from 'next/navigation';
+import { sectionHref } from '@/lib/site';
 
 // The site is a static export (`output: "export"`), so there is no server
 // runtime to host an API route. Instead the form posts to an endpoint supplied
@@ -10,6 +12,7 @@ const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? '';
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
 
 export default function Footer() {
+  const pathname = usePathname();
   const [projectIdea, setProjectIdea] = useState('');
   const [expandForm, setExpandForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -236,9 +239,9 @@ export default function Footer() {
           </div>
           <div className="footer-col">
             <h3>Studio</h3>
-            <a href="#services">Services</a>
-            <a href="#projects">Work</a>
-            <a href="#about">About</a>
+            <a href={sectionHref(pathname, 'services')}>Services</a>
+            <a href={sectionHref(pathname, 'projects')}>Work</a>
+            <a href={sectionHref(pathname, 'about')}>About</a>
             <a href="#contact">Contact</a>
           </div>
         </div>
