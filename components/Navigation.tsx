@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { sectionHref } from '@/lib/site';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const closeMobile = () => {
     setMenuOpen(false);
@@ -23,13 +26,15 @@ export default function Navigation() {
 
   return (
     <nav id="nav">
-      <Link href="#" className="nav-logo">
+      <Link href="/" className="nav-logo">
         Axiom Inc.
       </Link>
       <div className="nav-links">
-        <a href="#services">Services</a>
-        <a href="#projects">Work</a>
-        <a href="#about">About</a>
+        <a href={sectionHref(pathname, 'services')}>Services</a>
+        <a href={sectionHref(pathname, 'projects')}>Work</a>
+        <a href={sectionHref(pathname, 'about')}>About</a>
+        {/* #contact exists on every route (the footer renders on the 404 page),
+            so it stays a plain in-page anchor. */}
         <a href="#contact" className="nav-cta">
           Start a project →
         </a>
@@ -47,13 +52,13 @@ export default function Navigation() {
       </button>
 
       <div className={`mobile-menu ${menuOpen ? 'open' : ''}`} id="mobile-menu">
-        <a href="#services" onClick={closeMobile}>
+        <a href={sectionHref(pathname, 'services')} onClick={closeMobile}>
           Services
         </a>
-        <a href="#projects" onClick={closeMobile}>
+        <a href={sectionHref(pathname, 'projects')} onClick={closeMobile}>
           Work
         </a>
-        <a href="#about" onClick={closeMobile}>
+        <a href={sectionHref(pathname, 'about')} onClick={closeMobile}>
           About
         </a>
         <a href="#contact" className="nav-cta" onClick={closeMobile}>
