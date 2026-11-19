@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
-    apple: '/icon.svg',
+    // iOS rejects SVG for the home-screen icon, so this must be a raster PNG.
+    apple: '/apple-icon.png',
   },
   openGraph: {
     type: 'website',
