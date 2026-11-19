@@ -11,6 +11,11 @@ interface Point {
     vy: number;
 }
 
+// Grid spacing, pointer influence radius and peak displacement of the hero mesh.
+const SPACING = 68;
+const RADIUS = 230;
+const STRENGTH = 34;
+
 export default function Hero() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -24,19 +29,24 @@ export default function Hero() {
             return;
         }
 
-        let W = 0,
-            H = 0;
+        let W = 0;
+        let H = 0;
         let pts: Point[] = [];
         let rafId = 0;
+        let running = false;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let mX = canvas.offsetWidth / 2,
-            mY = canvas.offsetHeight / 2;
+
+        // Pointer target. When the pointer is away from the hero the target is
+        // parked far off-canvas, so every point relaxes back to its rest grid.
+        let active = false;
+        let mX = 0;
+        let mY = 0;
 
         function resizeMesh() {
             if (!canvas || !ctx) return;
-            // Scale the backing store by devicePixelRatio so the mesh is crisp on
-            // high-DPI displays; drawing stays in CSS pixels via the transform.
-            const dpr = window.devicePixelRatio || 1;
+            // Cap the backing store at 2x: beyond that the extra pixels cost
+            // fill rate without a visible gain on the faint mesh.
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
             W = canvas.offsetWidth;
             H = canvas.offsetHeight;
             canvas.width = Math.round(W * dpr);
@@ -47,16 +57,15 @@ export default function Hero() {
 
         function initPts() {
             pts = [];
-            const sp = 68;
-            const cols = Math.ceil(W / sp) + 2;
-            const rows = Math.ceil(H / sp) + 2;
+            const cols = Math.ceil(W / SPACING) + 2;
+            const rows = Math.ceil(H / SPACING) + 2;
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     pts.push({
-                        ox: c * sp,
-                        oy: r * sp,
-                        x: c * sp,
-                        y: r * sp,
+                        ox: c * SPACING,
+                        oy: r * SPACING,
+                        x: c * SPACING,
+                        y: r * SPACING,
                         vx: 0,
                         vy: 0,
                     });
@@ -64,24 +73,19 @@ export default function Hero() {
             }
         }
 
-        const handleMouseMove = (e: MouseEvent) => {
-            if (!canvas) return;
-            const rect = canvas.getBoundingClientRect();
-            mX = e.clientX - rect.left;
-            mY = e.clientY - rect.top;
-        };
-
-        function drawMesh() {
+        function step() {
             if (!ctx) return;
             ctx.clearRect(0, 0, W, H);
-            const sp = 68;
-            const cols = Math.ceil(W / sp) + 2;
+            const cols = Math.ceil(W / SPACING) + 2;
+
+            const tx0 = active ? mX : -10000;
+            const ty0 = active ? mY : -10000;
 
             pts.forEach((p) => {
-                const dx = mX - p.ox,
-                    dy = mY - p.oy;
+                const dx = tx0 - p.ox;
+                const dy = ty0 - p.oy;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                const force = Math.max(0, 1 - dist / 200) * 22;
+                const force = Math.max(0, 1 - dist / RADIUS) * STRENGTH;
                 const d = dist || 1;
                 const tx = p.ox + (dx / d) * force;
                 const ty = p.oy + (dy / d) * force;
@@ -118,36 +122,101 @@ export default function Hero() {
                 ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
                 ctx.fill();
             });
-
-            if (!reduceMotion) rafId = requestAnimationFrame(drawMesh);
         }
 
+        // True once the grid has settled back to rest with the pointer away.
+        // Lets the loop stop rather than redraw a static frame forever.
+        function isSettled() {
+            if (active) return false;
+            return pts.every(
+                (p) =>
+                    Math.abs(p.x - p.ox) < 0.06 &&
+                    Math.abs(p.y - p.oy) < 0.06 &&
+                    Math.abs(p.vx) < 0.06 &&
+                    Math.abs(p.vy) < 0.06
+            );
+        }
+
+        function loop() {
+            step();
+            if (running && !isSettled()) {
+                rafId = requestAnimationFrame(loop);
+            } else {
+                running = false;
+            }
+        }
+
+        function start() {
+            if (reduceMotion || running) return;
+            running = true;
+            rafId = requestAnimationFrame(loop);
+        }
+
+        function stop() {
+            running = false;
+            cancelAnimationFrame(rafId);
+        }
+
+        let repaintId = 0;
+        function repaintOnce() {
+            cancelAnimationFrame(repaintId);
+            repaintId = requestAnimationFrame(step);
+        }
+
+        const setPointer = (clientX: number, clientY: number) => {
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            mX = clientX - rect.left;
+            mY = clientY - rect.top;
+            active = true;
+            start();
+        };
+
+        const handlePointerMove = (e: PointerEvent) => setPointer(e.clientX, e.clientY);
+        const handlePointerDown = (e: PointerEvent) => setPointer(e.clientX, e.clientY);
+        const handlePointerLeave = () => {
+            active = false;
+        };
+
         const hero = document.getElementById('hero');
-        hero?.addEventListener('mousemove', handleMouseMove);
+        hero?.addEventListener('pointermove', handlePointerMove);
+        hero?.addEventListener('pointerdown', handlePointerDown);
+        hero?.addEventListener('pointerleave', handlePointerLeave);
+        hero?.addEventListener('pointercancel', handlePointerLeave);
 
         // Observe the canvas box rather than the window: the hero is sized by its
         // content, so its height can change without a window resize, and a window
         // handler may read a pre-reflow height. The observer fires after layout,
-        // so the backing store always matches the element's settled size. This is
-        // not a motion effect, so it stays registered under reduced motion.
-        let repaintId = 0;
-        const observer = new ResizeObserver(() => {
+        // so the backing store always matches the element's settled size.
+        const resizeObserver = new ResizeObserver(() => {
             resizeMesh();
-            if (reduceMotion) {
-                cancelAnimationFrame(repaintId);
-                repaintId = requestAnimationFrame(drawMesh);
-            }
+            if (reduceMotion || !active) repaintOnce();
+            else start();
         });
-        observer.observe(canvas);
+        resizeObserver.observe(canvas);
+
+        // Only burn frames while the hero is actually on screen.
+        const visibilityObserver = new IntersectionObserver(
+            (entries) => {
+                if (entries.some((e) => e.isIntersecting)) start();
+                else stop();
+            },
+            { threshold: 0 }
+        );
+        visibilityObserver.observe(canvas);
 
         resizeMesh();
-        drawMesh();
+        step();
 
         return () => {
-            cancelAnimationFrame(rafId);
+            stop();
             cancelAnimationFrame(repaintId);
-            observer.disconnect();
-            hero?.removeEventListener('mousemove', handleMouseMove);
+            resizeObserver.disconnect();
+            visibilityObserver.disconnect();
+            hero?.removeEventListener('pointermove', handlePointerMove);
+            hero?.removeEventListener('pointerdown', handlePointerDown);
+            hero?.removeEventListener('pointerleave', handlePointerLeave);
+            hero?.removeEventListener('pointercancel', handlePointerLeave);
         };
     }, []);
 
@@ -160,7 +229,7 @@ export default function Hero() {
                     AI Engineering Studio
                 </div>
                 <h1 className="hero-title">
-                    Where <em>intelligence</em>
+                    Where <em data-text="intelligence">intelligence</em>
                     <br />
                     meets precision form
                 </h1>
