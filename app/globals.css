@@ -312,7 +312,7 @@ h1.hero-title em { position: relative; font-style: normal; color: var(--green); 
 
 .hero-scroll {
   display: flex; align-items: center; gap: 14px;
-  margin-top: 4rem; color: var(--ink3);
+  margin-top: 4rem; color: var(--ink2);
   font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
   opacity: 0; animation: fadeUp .6s .7s forwards;
 }
@@ -441,7 +441,7 @@ section {
 
 .service-num {
   font-family: 'DM Mono', monospace;
-  font-size: 11px; color: var(--ink3);
+  font-size: 11px; color: var(--ink2);
   letter-spacing: .06em; margin-bottom: 1.75rem;
 }
 .service-icon-wrap {
@@ -543,7 +543,7 @@ section {
 .project-body { padding: 1.4rem 1.6rem 1.6rem; }
 .project-cat {
   font-size: 11px; font-weight: 500;
-  color: var(--ink3); letter-spacing: .07em;
+  color: var(--ink2); letter-spacing: .07em;
   text-transform: uppercase; margin-bottom: .4rem;
 }
 .project-body h3 {
@@ -642,7 +642,7 @@ section {
   font-size: 13px; font-weight: 600; flex-shrink: 0;
 }
 .author-name { font-size: .85rem; font-weight: 500; color: var(--ink); }
-.author-role { font-size: .75rem; color: var(--ink3); margin-top: 1px; }
+.author-role { font-size: .75rem; color: var(--ink2); margin-top: 1px; }
 
 /* ─── FOOTER / TERMINAL ─── */
 footer {
@@ -847,7 +847,7 @@ footer::before {
   padding: 0 32px;
   font-family: 'Syne', sans-serif;
   font-size: 13px; font-weight: 600; letter-spacing: .04em;
-  color: var(--ink3); text-transform: uppercase;
+  color: var(--ink2); text-transform: uppercase;
 }
 .marquee-dot { width: 4px; height: 4px; background: var(--green); border-radius: 50%; }
 /* Pause on hover so a visitor can read a keyword they noticed. */
