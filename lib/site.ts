@@ -14,6 +14,19 @@ export const siteUrl = (
 
 export const siteName = 'Axiom Inc.';
 
+/**
+ * Date the home page content last changed, for `sitemap.xml`'s `lastmod`.
+ *
+ * This is deliberately a constant rather than `new Date()`: a build-time
+ * timestamp makes `lastmod` equal the deploy time, so it changes on every
+ * deploy even when nothing shipped. Crawlers detect that pattern and start
+ * ignoring the signal entirely. Bump this by hand when page content changes.
+ *
+ * A source-file mtime is not a substitute — a fresh CI checkout stamps every
+ * file with the checkout time, which collapses back to the deploy time.
+ */
+export const lastContentChange = new Date('2026-11-20T00:00:00Z');
+
 export const siteTagline = 'AI Engineering x Premium Web Development';
 
 /**
