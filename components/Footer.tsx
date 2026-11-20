@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type HTMLAttributes } from 'react';
+import { useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { usePathname } from 'next/navigation';
 import { sectionHref } from '@/lib/site';
 
@@ -10,6 +10,17 @@ import { sectionHref } from '@/lib/site';
 // sent anything and points the visitor at a real contact address.
 const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? '';
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
+
+const REQUIRED_FIELD_LABELS: Record<string, string> = {
+  'term-main': 'a project description',
+  't-name': 'your name',
+  't-email': 'your email address',
+};
+
+const formatList = (items: string[]) =>
+  items.length < 2
+    ? items.join('')
+    : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
 
 export default function Footer() {
   const pathname = usePathname();
@@ -23,13 +34,38 @@ export default function Footer() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [invalidFields, setInvalidFields] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Focus has to wait for the re-render that removes `inert` from the panel;
+  // calling `.focus()` on an inert element is a no-op.
+  const pendingFocusRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (pendingFocusRef.current) {
+      document.getElementById(pendingFocusRef.current)?.focus();
+      pendingFocusRef.current = null;
+    }
+  }, [invalidFields]);
+
+  // Validation feedback is derived from `invalidFields` rather than stored as a
+  // string, so it disappears as soon as the visitor fills the last empty field.
+  const validationMessage =
+    invalidFields.length === 0
+      ? ''
+      : `Please fill in ${formatList(invalidFields.map((id) => REQUIRED_FIELD_LABELS[id]))}.`;
+  const formMessage = error || validationMessage;
+
+  const isInvalid = (id: string) => invalidFields.includes(id);
+
+  const clearInvalid = (id: string) =>
+    setInvalidFields((prev) => prev.filter((field) => field !== id));
 
   const handleIdeaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setProjectIdea(value);
     setSubmitted(false);
     setError('');
+    clearInvalid('term-main');
     if (value.trim().length > 6) {
       setExpandForm(true);
     } else {
@@ -54,25 +90,27 @@ export default function Footer() {
       ...prev,
       [id.replace('t-', '')]: value,
     }));
+    clearInvalid(id);
   };
 
   const handleSubmit = async () => {
     const { name, email } = formData;
 
-    if (!projectIdea.trim() || !name.trim() || !email.trim()) {
-      // Highlight empty fields
-      const fields = ['term-main', 't-name', 't-email'];
-      fields.forEach((id) => {
-        const el = document.getElementById(id) as HTMLInputElement;
-        if (el && !el.value.trim()) {
-          el.style.borderColor = 'rgba(255,80,80,0.5)';
-          setTimeout(() => {
-            el.style.borderColor = '';
-          }, 1500);
-        }
-      });
+    const missing = [
+      !projectIdea.trim() && 'term-main',
+      !name.trim() && 't-name',
+      !email.trim() && 't-email',
+    ].filter((id): id is string => Boolean(id));
+
+    if (missing.length > 0) {
+      setError('');
+      setInvalidFields(missing);
+      setExpandForm(true);
+      pendingFocusRef.current = missing[0];
       return;
     }
+
+    setInvalidFields([]);
 
     if (!CONTACT_ENDPOINT) {
       setError(
@@ -137,6 +175,8 @@ export default function Footer() {
               className="term-input"
               id="term-main"
               aria-label="Describe your project idea"
+              aria-invalid={isInvalid('term-main') || undefined}
+              aria-describedby={formMessage ? 'term-form-message' : undefined}
               placeholder="Describe your project idea..."
               autoComplete="off"
               value={projectIdea}
@@ -165,6 +205,8 @@ export default function Footer() {
               <input
                 id="t-name"
                 placeholder="e.g. Jordan Avery"
+                aria-invalid={isInvalid('t-name') || undefined}
+                aria-describedby={formMessage ? 'term-form-message' : undefined}
                 value={formData.name}
                 onChange={handleFormChange}
               />
@@ -175,6 +217,8 @@ export default function Footer() {
                 id="t-email"
                 type="email"
                 placeholder="you@company.com"
+                aria-invalid={isInvalid('t-email') || undefined}
+                aria-describedby={formMessage ? 'term-form-message' : undefined}
                 value={formData.email}
                 onChange={handleFormChange}
               />
@@ -218,10 +262,10 @@ export default function Footer() {
                 Received. We&apos;ll be in touch within 24 hours.
               </div>
             )}
-            {error && (
-              <div className="term-error" role="alert">
+            {formMessage && (
+              <div className="term-error" id="term-form-message" role="alert">
                 <span aria-hidden="true">!</span>
-                {error}
+                {formMessage}
               </div>
             )}
           </form>

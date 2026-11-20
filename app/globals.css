@@ -758,6 +758,18 @@ footer::before {
 }
 .term-field select option { background: #1a1a18; }
 
+/* Validation state. The message in `.term-error` carries the meaning; the
+   border is a secondary cue, so the error is never colour-only (WCAG 1.4.1). */
+.term-field input[aria-invalid='true'] {
+  border-color: rgba(255,130,130,.85);
+}
+/* `.term-input` has no border of its own (it sits inside `.term-row`). */
+.term-input[aria-invalid='true'] {
+  outline: 1px solid rgba(255,130,130,.85);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
 .term-actions { display: flex; align-items: center; gap: 14px; margin-top: .5rem; }
 .term-btn {
   padding: 11px 26px; background: var(--green); color: #fff;
