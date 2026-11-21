@@ -235,7 +235,7 @@ export default function Footer() {
               AI Engineering x Premium Web Development. Building products that matter, with
               craft that endures.
             </p>
-            <p className="footer-copy">© 2025 Axiom Inc. Studio. All rights reserved.</p>
+            <p className="footer-copy">© {new Date().getFullYear()} Axiom Inc. Studio. All rights reserved.</p>
           </div>
           <div className="footer-col">
             <h3>Studio</h3>
