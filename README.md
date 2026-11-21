@@ -151,7 +151,7 @@ Edit component files in the `components/` directory to modify:
 
 ## License
 
-© 2025 Axiom Inc. Studio. All rights reserved.
+© 2026 Axiom Inc. Studio. All rights reserved.
 
 ## Support
 
