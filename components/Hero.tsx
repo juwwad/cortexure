@@ -222,7 +222,7 @@ export default function Hero() {
 
     return (
         <div id="hero">
-            <canvas id="mesh-canvas" ref={canvasRef}></canvas>
+            <canvas id="mesh-canvas" ref={canvasRef} aria-hidden="true"></canvas>
             <div className="hero-inner">
                 <div className="hero-badge">
                     <span className="hero-badge-dot"></span>
