@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { usePathname } from 'next/navigation';
-import { sectionHref } from '@/lib/site';
+import { copyrightYear, sectionHref } from '@/lib/site';
 
 // The site is a static export (`output: "export"`), so there is no server
 // runtime to host an API route. Instead the form posts to an endpoint supplied
@@ -279,7 +279,7 @@ export default function Footer() {
               AI Engineering x Premium Web Development. Building products that matter, with
               craft that endures.
             </p>
-            <p className="footer-copy">© {new Date().getFullYear()} Axiom Inc. Studio. All rights reserved.</p>
+            <p className="footer-copy">© {copyrightYear} Axiom Inc. Studio. All rights reserved.</p>
           </div>
           <div className="footer-col">
             <h3>Studio</h3>

@@ -27,6 +27,17 @@ export const siteName = 'Axiom Inc.';
  */
 export const lastContentChange = new Date('2026-11-20T00:00:00Z');
 
+/**
+ * Copyright year shown in the footer.
+ *
+ * A constant, not `new Date().getFullYear()`: the site is a static export, so a
+ * value computed in a client component is baked into the prerendered HTML at
+ * build time and then recomputed in the browser, producing a hydration
+ * mismatch whenever the page is viewed in a later year than it was built in.
+ * Bump this when the year changes, in the same change that touches content.
+ */
+export const copyrightYear = 2026;
+
 export const siteTagline = 'AI Engineering x Premium Web Development';
 
 /**
