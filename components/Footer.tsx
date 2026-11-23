@@ -70,6 +70,11 @@ export default function Footer() {
       setExpandForm(true);
     } else {
       setExpandForm(false);
+      // The panel (and the message inside it) is hidden while collapsed, so
+      // any pending field errors would be clipped to nothing and left
+      // attributed to unreachable inputs. Drop them; the next submit
+      // re-validates from scratch.
+      setInvalidFields([]);
     }
   };
 
