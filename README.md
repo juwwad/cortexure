@@ -16,7 +16,7 @@ A premium portfolio website built with **Next.js 15**, **TypeScript**, and **Rea
 
 ## Tech Stack
 
-- **Framework**: Next.js 15.5.28
+- **Framework**: Next.js 15.5.29
 - **Language**: TypeScript 5
 - **UI Library**: React — the app declares `react` / `react-dom` `^18.2.0`, but the static export is rendered by Next.js's vendored React 19.2.0-canary (`next/dist/compiled/react`), not the declared dependency. Write components for React 19 semantics.
 - **Styling**: CSS3 (global styles with CSS custom properties)
@@ -48,7 +48,7 @@ A premium portfolio website built with **Next.js 15**, **TypeScript**, and **Rea
 
 ### Prerequisites
 
-- Node.js 18.18 or later (Next.js 15.5.28 requires `^18.18.0 || ^19.8.0 || >= 20.0.0`)
+- Node.js 18.18 or later (Next.js 15.5.29 requires `^18.18.0 || ^19.8.0 || >= 20.0.0`)
 - npm
 
 ### Installation
