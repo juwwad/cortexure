@@ -239,8 +239,10 @@ h1.hero-title {
 }
 h1.hero-title em { position: relative; font-style: normal; color: var(--green); }
 /* Hidden by default so browsers without background-clip:text never render a
-   second, visible copy of the word. */
-h1.hero-title .hero-shimmer { display: none; }
+   second, visible copy of the word. `user-select: none` keeps the decorative
+   duplicate out of copied text and selection, where generated content never
+   appeared. */
+h1.hero-title .hero-shimmer { display: none; user-select: none; }
 /* A soft highlight sweeps across the highlighted word. This is a transform on an
    overlay layer, so the sweep runs on the compositor; animating
    background-position instead repainted the text glyphs every frame. */
