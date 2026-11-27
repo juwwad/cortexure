@@ -229,7 +229,15 @@ export default function Hero() {
                     AI Engineering Studio
                 </div>
                 <h1 className="hero-title">
-                    Where <em data-text="intelligence">intelligence</em>
+                    {'Where '}
+                    <em>
+                        intelligence
+                        {/* The shimmer is a decorative duplicate of the word above;
+                            hiding it keeps the H1 from being announced twice. */}
+                        <span className="hero-shimmer" aria-hidden="true">
+                            intelligence
+                        </span>
+                    </em>
                     <br />
                     meets precision form
                 </h1>

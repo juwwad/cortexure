@@ -238,8 +238,13 @@ h1.hero-title {
   animation: fadeUp .7s .22s forwards;
 }
 h1.hero-title em { position: relative; font-style: normal; color: var(--green); }
-/* A soft highlight sweeps across the highlighted word. This is a transform on a
-   pseudo-element overlay, so the sweep runs on the compositor; animating
+/* Hidden by default so browsers without background-clip:text never render a
+   second, visible copy of the word. `user-select: none` keeps the decorative
+   duplicate out of copied text and selection, where generated content never
+   appeared. */
+h1.hero-title .hero-shimmer { display: none; user-select: none; }
+/* A soft highlight sweeps across the highlighted word. This is a transform on an
+   overlay layer, so the sweep runs on the compositor; animating
    background-position instead repainted the text glyphs every frame. */
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   h1.hero-title em {
@@ -248,8 +253,12 @@ h1.hero-title em { position: relative; font-style: normal; color: var(--green); 
     background-clip: text;
     color: transparent;
   }
-  h1.hero-title em::after {
-    content: attr(data-text);
+  /* The shimmer text is a real span rather than `::after { content: attr(...) }`
+     because generated content is folded into the H1's accessible name, which
+     made screen readers announce "intelligence" twice. The span carries
+     aria-hidden, so the visible word stays the only name contribution. */
+  h1.hero-title .hero-shimmer {
+    display: block;
     position: absolute; inset: 0;
     white-space: nowrap;
     background: linear-gradient(100deg, transparent 42%, rgba(255,255,255,.92) 50%, transparent 58%);
