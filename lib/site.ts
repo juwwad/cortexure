@@ -15,6 +15,14 @@ export const siteUrl = (
 export const siteName = 'Axiom Inc.';
 
 /**
+ * Public contact address, read from NEXT_PUBLIC_CONTACT_EMAIL at build time.
+ *
+ * Empty when none is configured, in which case the UI omits every email
+ * fallback rather than inventing an address that may not receive mail.
+ */
+export const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
+
+/**
  * Date the home page content last changed, for `sitemap.xml`'s `lastmod`.
  *
  * This is deliberately a constant rather than `new Date()`: a build-time

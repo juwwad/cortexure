@@ -108,6 +108,10 @@ npm run lint
 - Without that variable the form refuses to fake a success: it shows an error
   and, if `NEXT_PUBLIC_CONTACT_EMAIL` is set, points the visitor at that
   address.
+- When `NEXT_PUBLIC_CONTACT_EMAIL` is set it also renders as a persistent
+  `mailto:` link in the footer, so a visitor has a fallback contact method even
+  if they never submit the form. The link is omitted when the variable is unset,
+  so the site never shows an address that was not configured.
 
 ## Customization
 
