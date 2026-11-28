@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { usePathname } from 'next/navigation';
-import { sectionHref } from '@/lib/site';
+import { contactEmail, sectionHref } from '@/lib/site';
 
 // The site is a static export (`output: "export"`), so there is no server
 // runtime to host an API route. Instead the form posts to an endpoint supplied
 // at build time. When no endpoint is configured the form refuses to pretend it
 // sent anything and points the visitor at a real contact address.
 const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? '';
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
 
 const REQUIRED_FIELD_LABELS: Record<string, string> = {
   'term-main': 'a project description',
@@ -114,8 +113,8 @@ export default function Footer() {
 
     if (!CONTACT_ENDPOINT) {
       setError(
-        CONTACT_EMAIL
-          ? `This form isn't connected yet — email us directly at ${CONTACT_EMAIL}.`
+        contactEmail
+          ? `This form isn't connected yet — email us directly at ${contactEmail}.`
           : "This form isn't connected yet — please reach out to us directly and we'll pick it up from there.",
       );
       return;
@@ -141,8 +140,8 @@ export default function Footer() {
       setSubmitted(true);
     } catch {
       setError(
-        CONTACT_EMAIL
-          ? `We couldn't send that. Please try again, or email us at ${CONTACT_EMAIL}.`
+        contactEmail
+          ? `We couldn't send that. Please try again, or email us at ${contactEmail}.`
           : "We couldn't send that. Please try again.",
       );
     } finally {
@@ -287,6 +286,9 @@ export default function Footer() {
             <a href={sectionHref(pathname, 'projects')}>Work</a>
             <a href={sectionHref(pathname, 'about')}>About</a>
             <a href="#contact">Contact</a>
+            {contactEmail && (
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+            )}
           </div>
         </div>
       </div>
